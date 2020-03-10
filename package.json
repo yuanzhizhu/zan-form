@@ -9,7 +9,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
-    "zent": "^8.3.0"
+    "zent": "6.5.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -33,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-zent": "^2.2.2",
+    "babel-plugin-zent": "^1.2.2",
     "react-app-rewired": "^2.1.5"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "zform",
+  "version": "1.0.0",
+  "description": "一个json转表单的方案",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuanzhizhu/json-form.git"
+  },
+  "keywords": [
+    "json-form"
+  ],
+  "author": "竹致远",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuanzhizhu/json-form/issues"
+  },
+  "homepage": "https://github.com/yuanzhizhu/json-form#readme"
+}
