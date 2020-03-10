@@ -50,7 +50,14 @@ const zForm = (schema, formInstance) => {
   const $formElement = schema.map(componentDesc => {
     validComponentDesc(componentDesc);
 
-    const { $component, $name, $show, $format, ...props } = componentDesc;
+    const {
+      $component,
+      $name,
+      $show,
+      $format,
+      $fetchData,
+      ...props
+    } = componentDesc;
 
     props.name = $name;
 
@@ -64,7 +71,13 @@ const zForm = (schema, formInstance) => {
 
     return (
       showComponent && (
-        <Component key={key} $values={values} $format={$format} {...props} />
+        <Component
+          key={key}
+          $values={values}
+          $format={$format}
+          $fetch_data={$fetchData}
+          {...props}
+        />
       )
     );
   });

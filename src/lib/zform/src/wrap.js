@@ -1,22 +1,38 @@
 import React from "react";
 
 const wrap = Component => {
-  const newComponent = class extends React.Component {
+  class NewComponent extends React.Component {
+    state = {
+      data: this.props.data
+    };
+
     componentDidMount = () => {
-      // console.log('did mount');
+      const { $fetch_data, $values } = this.props;
+      if ($fetch_data) {
+        $fetch_data($values).then(data => {
+          this.setState({ data });
+        });
+      }
     };
 
     render = () => {
-      const { $format, $values, ...restProps } = this.props;
+      const { $format, $values, forwardedRef, ...restProps } = this.props;
+
+      if (this.state.data) {
+        restProps.data = this.state.data;
+      }
 
       return $format ? (
-        $format(<Component {...restProps} />, $values)
+        $format(<Component ref={forwardedRef} {...restProps} />, $values)
       ) : (
-        <Component {...restProps} />
+        <Component ref={forwardedRef} {...restProps} />
       );
     };
-  };
-  return newComponent;
+  }
+
+  return React.forwardRef((props, ref) => {
+    return <NewComponent {...props} forwardedRef={ref} />;
+  });
 };
 
 export default wrap;

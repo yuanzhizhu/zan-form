@@ -1,4 +1,7 @@
 import React from "react";
+import axios from "axios";
+
+const prefix = /github/.test(window.location.host) ? "/json-form/build" : "";
 
 export default [
   {
@@ -28,6 +31,37 @@ export default [
         value: "tester"
       }
     ]
+  },
+  {
+    $fetchData: () => axios(`${prefix}/province.json`).then(res => res.data),
+    $format: $component => (
+      <div className="tip_item">
+        <div>{$component}</div>
+        <div>省份数据取自ajax</div>
+      </div>
+    ),
+    $component: "FormSelectField",
+    $name: "province",
+    label: "省份",
+    required: "请选择您所在省份",
+    autoWidth: true,
+    data: []
+  },
+  {
+    $show: ($values) => !!$values.province,
+    $fetchData: (values) => axios(`${prefix}/${values.province}.json`).then(res => res.data),
+    $format: $component => (
+      <div className="tip_item">
+        <div>{$component}</div>
+        <div>城市数据取自ajax</div>
+      </div>
+    ),
+    $component: "FormSelectField",
+    $name: "city",
+    label: "城市",
+    required: "请选择您所在城市",
+    autoWidth: true,
+    data: []
   },
   {
     $show: values => values.profession === "programmer",

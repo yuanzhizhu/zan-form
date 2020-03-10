@@ -1,13 +1,12 @@
-.in_cloud_price > div:first-child,
-.docker_price > div:first-child {
+.tip_item > div:first-child {
   display: inline-block;
   vertical-align: top;
   margin-right: 4px;
 }
 
-.in_cloud_price > div:last-child,
-.docker_price > div:last-child {
+.tip_item > div:last-child {
   display: inline-block;
   vertical-align: top;
   line-height: 30px;
+  font-size: 12px;
 }
