@@ -5,6 +5,10 @@ const prefix = /github/.test(window.location.host) ? "/json-form/build" : "";
 
 export default [
   {
+    _show: values => values.frameworker === "react",
+    _slot: "react-banner"
+  },
+  {
     _component: "FormInputField",
     _name: "name",
     label: "姓名",
@@ -14,7 +18,7 @@ export default [
   {
     _component: "FormSelectField",
     _name: "province",
-    _fetchData: () => axios(`${prefix}/province.json`).then(res => res.data),
+    _fetch_data: () => axios(`${prefix}/province.json`).then(res => res.data),
     _format: $component => (
       <div className="tip_item">
         <div>{$component}</div>
@@ -30,7 +34,7 @@ export default [
     _component: "FormSelectField",
     _name: "city",
     _show: values => !!values.province,
-    _fetchData: values =>
+    _fetch_data: values =>
       axios(`${prefix}/${values.province}.json`).then(res => res.data),
     _format: $component => (
       <div className="tip_item">

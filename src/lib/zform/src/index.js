@@ -2,20 +2,23 @@
 
 import React from "react";
 import { Form } from "zent";
-import zformComponent from "./zformComponent";
+
+import Slot from "./slot";
+import componentDecorator from "./componentDecorator";
 
 const componentLib = {};
 for (let key in Form) {
-  componentLib[key] = zformComponent(Form[key]);
+  componentLib[key] = componentDecorator(Form[key]);
 }
 
+// 检验组件描述
 const validComponentDesc = componentDesc => {
   const fields = ["_name", "_component"];
 
   return fields.every(field => {
     const fieldValue = componentDesc[field];
     if (!fieldValue) {
-      throw new Error(`${field}为必传，请检查是否有遗漏`);
+      throw new Error(`在${JSON.stringify(componentDesc)}中缺少${field}`);
     } else {
       return true;
     }
@@ -35,56 +38,86 @@ const addValidator = props => {
   }
 };
 
-const genKey = (componentDesc, nameReferCountMap) => {
-  const { _name } = componentDesc;
-  const nameReferCount = (nameReferCountMap[_name] || 0) + 1;
-  nameReferCountMap[_name] = nameReferCount;
+// 生成key的函数
+const genKeyFn = (referCountMap = {}) => identifier => {
+  const referCount = (referCountMap[identifier] || 0) + 1;
+  referCountMap[identifier] = referCount;
 
-  return `${_name}_${nameReferCount}`;
+  return `${identifier}_${referCount}`;
 };
 
-const zForm = (schema, formInstance) => {
+// 通过$slotsElementsFrag得到slotMap
+const getSlotMap = $slotsElementsFrag => {
+  const slotMap = {};
+
+  if ($slotsElementsFrag) {
+    let $slotElements = $slotsElementsFrag.props.children;
+    if ($slotElements) {
+      $slotElements = Array.isArray($slotElements)
+        ? $slotElements
+        : [$slotElements];
+      for (let $slotElement of $slotElements) {
+        const { id, children } = $slotElement.props;
+        if (id === undefined) throw new Error("<Slot />中id为必传props");
+        slotMap[id] = children;
+      }
+    }
+  }
+
+  return slotMap;
+};
+
+const zForm = (schema, formInstance) => $slotsElementsFrag => {
   const values = formInstance.props.zentForm.getFormValues();
-  const nameReferCountMap = {};
+  const slotMap = getSlotMap($slotsElementsFrag);
+  const genKeyByIdentifier = genKeyFn();
 
   const formElement = schema.map(componentDesc => {
-    validComponentDesc(componentDesc);
-
     const {
       _component,
       _name,
       _show,
       _format,
-      _fetchData,
+      _fetch_data,
       _subscribe,
+      _slot,
       ...props
     } = componentDesc;
 
-    props.name = _name;
+    let rcEle = null;
 
-    addValidator(props);
+    if (!!_slot) {
+      const key = genKeyByIdentifier(_slot);
+      rcEle = <React.Fragment key={key}>{slotMap[_slot]}</React.Fragment>;
+    } else {
+      validComponentDesc(componentDesc);
+      addValidator(props);
 
-    const Component = componentLib[_component];
+      const key = genKeyByIdentifier(_name);
+      props.name = _name;
+
+      const Component = componentLib[_component];
+
+      rcEle = (
+        <Component
+          key={key}
+          _format={_format}
+          _values={values}
+          _subscribe={_subscribe}
+          _fetch_data={_fetch_data}
+          {...props}
+        />
+      );
+    }
 
     const showComponent = _show ? _show(values) : true;
 
-    const key = genKey(componentDesc, nameReferCountMap);
-
-    return (
-      showComponent && (
-        <Component
-          key={key}
-          _values={values}
-          _format={_format}
-          _subscribe={_subscribe}
-          _fetch_data={_fetchData}
-          {...props}
-        />
-      )
-    );
+    return showComponent ? rcEle : null;
   });
 
   return formElement;
 };
+
+zForm.Slot = Slot;
 
 export default zForm;

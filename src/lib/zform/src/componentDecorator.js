@@ -1,6 +1,6 @@
 import React from "react";
 
-const zformComponent = Component => {
+const componentDecorator = Component => {
   class NewComponent extends React.Component {
     state = {
       key: Math.random().toString(36),
@@ -35,9 +35,9 @@ const zformComponent = Component => {
 
     render = () => {
       const {
-        _format,
         _fetch_data,
         _values,
+        _format,
         _subscribe,
         forwardedRef,
         ...restProps
@@ -65,4 +65,4 @@ const zformComponent = Component => {
   });
 };
 
-export default zformComponent;
+export default componentDecorator;
