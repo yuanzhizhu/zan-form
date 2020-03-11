@@ -2,15 +2,15 @@
 
 import React from "react";
 import { Form } from "zent";
-import wrap from "./wrap";
+import zformComponent from "./zformComponent";
 
 const componentLib = {};
 for (let key in Form) {
-  componentLib[key] = wrap(Form[key]);
+  componentLib[key] = zformComponent(Form[key]);
 }
 
 const validComponentDesc = componentDesc => {
-  const fields = ["$name", "$component"];
+  const fields = ["_name", "_component"];
 
   return fields.every(field => {
     const fieldValue = componentDesc[field];
@@ -36,36 +36,37 @@ const addValidator = props => {
 };
 
 const genKey = (componentDesc, nameReferCountMap) => {
-  const { $name } = componentDesc;
-  const nameReferCount = (nameReferCountMap[$name] || 0) + 1;
-  nameReferCountMap[$name] = nameReferCount;
+  const { _name } = componentDesc;
+  const nameReferCount = (nameReferCountMap[_name] || 0) + 1;
+  nameReferCountMap[_name] = nameReferCount;
 
-  return `${$name}_${nameReferCount}`;
+  return `${_name}_${nameReferCount}`;
 };
 
 const zForm = (schema, formInstance) => {
   const values = formInstance.props.zentForm.getFormValues();
   const nameReferCountMap = {};
 
-  const $formElement = schema.map(componentDesc => {
+  const formElement = schema.map(componentDesc => {
     validComponentDesc(componentDesc);
 
     const {
-      $component,
-      $name,
-      $show,
-      $format,
-      $fetchData,
+      _component,
+      _name,
+      _show,
+      _format,
+      _fetchData,
+      _subscribe,
       ...props
     } = componentDesc;
 
-    props.name = $name;
+    props.name = _name;
 
     addValidator(props);
 
-    const Component = componentLib[$component];
+    const Component = componentLib[_component];
 
-    const showComponent = $show ? $show(values) : true;
+    const showComponent = _show ? _show(values) : true;
 
     const key = genKey(componentDesc, nameReferCountMap);
 
@@ -73,16 +74,17 @@ const zForm = (schema, formInstance) => {
       showComponent && (
         <Component
           key={key}
-          $values={values}
-          $format={$format}
-          $fetch_data={$fetchData}
+          _values={values}
+          _format={_format}
+          _subscribe={_subscribe}
+          _fetch_data={_fetchData}
           {...props}
         />
       )
     );
   });
 
-  return $formElement;
+  return formElement;
 };
 
 export default zForm;

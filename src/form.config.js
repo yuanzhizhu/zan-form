@@ -5,15 +5,52 @@ const prefix = /github/.test(window.location.host) ? "/json-form/build" : "";
 
 export default [
   {
-    $component: "FormInputField",
-    $name: "name",
+    _component: "FormInputField",
+    _name: "name",
     label: "姓名",
     required: "请输入您的名字",
     placeholder: "请输入名字"
   },
   {
-    $component: "FormSelectField",
-    $name: "profession",
+    _component: "FormSelectField",
+    _name: "province",
+    _fetchData: () => axios(`${prefix}/province.json`).then(res => res.data),
+    _format: $component => (
+      <div className="tip_item">
+        <div>{$component}</div>
+        <div>省份数据取自ajax</div>
+      </div>
+    ),
+    label: "省份",
+    required: "请选择您所在省份",
+    autoWidth: true,
+    data: []
+  },
+  {
+    _component: "FormSelectField",
+    _name: "city",
+    _show: values => !!values.province,
+    _fetchData: values =>
+      axios(`${prefix}/${values.province}.json`).then(res => res.data),
+    _format: $component => (
+      <div className="tip_item">
+        <div>{$component}</div>
+        <div>城市数据取自ajax</div>
+      </div>
+    ),
+    _subscribe: (prevValues, values, restart) => {
+      if (values.province !== prevValues.province) {
+        restart();
+      }
+    },
+    label: "城市",
+    required: "请选择您所在城市",
+    autoWidth: true,
+    data: []
+  },
+  {
+    _component: "FormSelectField",
+    _name: "profession",
     label: "职业",
     required: "请选择您的职业",
     autoWidth: true,
@@ -33,40 +70,9 @@ export default [
     ]
   },
   {
-    $fetchData: () => axios(`${prefix}/province.json`).then(res => res.data),
-    $format: $component => (
-      <div className="tip_item">
-        <div>{$component}</div>
-        <div>省份数据取自ajax</div>
-      </div>
-    ),
-    $component: "FormSelectField",
-    $name: "province",
-    label: "省份",
-    required: "请选择您所在省份",
-    autoWidth: true,
-    data: []
-  },
-  {
-    $show: ($values) => !!$values.province,
-    $fetchData: (values) => axios(`${prefix}/${values.province}.json`).then(res => res.data),
-    $format: $component => (
-      <div className="tip_item">
-        <div>{$component}</div>
-        <div>城市数据取自ajax</div>
-      </div>
-    ),
-    $component: "FormSelectField",
-    $name: "city",
-    label: "城市",
-    required: "请选择您所在城市",
-    autoWidth: true,
-    data: []
-  },
-  {
-    $show: values => values.profession === "programmer",
-    $component: "FormSelectField",
-    $name: "language",
+    _component: "FormSelectField",
+    _name: "language",
+    _show: values => values.profession === "programmer",
     label: "语言",
     required: "请选择语言",
     data: [
@@ -81,9 +87,9 @@ export default [
     ]
   },
   {
-    $show: values => values.language === "javascript",
-    $name: "frameworker",
-    $component: "FormSelectField",
+    _component: "FormSelectField",
+    _name: "frameworker",
+    _show: values => values.language === "javascript",
     label: "开发框架",
     required: "请选择开发框架",
     data: [
@@ -102,9 +108,9 @@ export default [
     ]
   },
   {
-    $show: values => values.language === "java",
-    $component: "FormSelectField",
-    $name: "frameworker",
+    _component: "FormSelectField",
+    _name: "frameworker",
+    _show: values => values.language === "java",
     label: "开发框架",
     required: "请选择开发框架",
     data: [
@@ -123,9 +129,9 @@ export default [
     ]
   },
   {
-    $show: values => values.profession === "designer",
-    $component: "FormSelectField",
-    $name: "design_tool",
+    _component: "FormSelectField",
+    _name: "design_tool",
+    _show: values => values.profession === "designer",
     label: "作图工具",
     required: "请选择作图工具",
     data: [
@@ -140,9 +146,9 @@ export default [
     ]
   },
   {
-    $show: values => values.profession === "tester",
-    $component: "FormSelectField",
-    $name: "test_tool",
+    _component: "FormSelectField",
+    _name: "test_tool",
+    _show: values => values.profession === "tester",
     label: "测试工具",
     required: "请选择测试工具",
     data: [
