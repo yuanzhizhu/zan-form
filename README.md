@@ -1,68 +1,91 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# zForm 文档
 
-## Available Scripts
+## 简述
 
-In the project directory, you can run:
+zForm 是一个通过“对象描述”生成“组件”的一个库。该库基于 `zent`。
 
-### `yarn start`
+[zent](https://github.com/youzan/zent) 是一个有赞开源的 UI 组件库，对标蚂蚁金服的 `Ant Design`。
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 在线示例
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+点击查看[在线示例](https://yuanzhizhu.github.io/json-form/build/index.html)
 
-### `yarn test`
+## 背景
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+业务中时常会存在复杂表单的场景，比如 “第一项的值” 决定 “第二项的显隐”，“第二项的值” 决定 “第三项的显隐” 这种情况。
 
-### `yarn build`
+这种场景一个普遍的处理方法是，针对每一个“动态的表单项”，单独设置一个 `state` 来控制显隐。这是一个最简单，最暴力的处理方法。
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+zForm 将提供一种更优雅的方案。
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## 演化思路
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1、是否有必要针对每一个“动态的表单项”，单独设置一个 `state` 来控制显隐？
 
-### `yarn eject`
+在回答这个问题之前，先举例子，如下：
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`表单项A` 和 `表单项B` 这两项，同时决定了 `表单项C` 的显隐性。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+用 `item_c_visible_state` 表示 `表单项C` 显隐性的 state。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+用 `item_a_value` 表示 `表单项A` 的值。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+用 `item_b_value` 表示 `表单项B` 的值。
 
-## Learn More
+`item_a_value` + `item_b_value` => `item_c_visible_state` => 真实的 `表单项C` 显隐
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+从这里可以看出来，`item_c_visible_state` 只是一个“中间值“。事实上可以一步到位：
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`item_a_value` + `item_b_value` => 真实的 `表单项C` 显隐。
 
-### Code Splitting
+通过以上的分析，可以得出一个结论：
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+没必要为每个“动态的表单项”设置一个单独的 `state`，可以通过整个表单数据做为 values，加逻辑判断，最终实现一样的功能：`values.item_a_value + values.item_b_value => 表单项C显隐`
 
-### Analyzing the Bundle Size
+### 2、如何用一个优雅的方式，聚合表单数据？
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```jsx
+// 第一种
+state = {
+  item_a_value: "a",
+  item_b_value: "b",
+  item_c_value: "c",
+  item_x_value: "x",
+  loading: false
+};
+```
 
-### Making a Progressive Web App
+上面的表单数据，更加优雅的方式是：
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+```jsx
+// 第二种
+state = {
+  values: {
+    item_a_value: "a",
+    item_b_value: "b",
+    item_c_value: "c",
+    item_x_value: "x"
+  },
+  loading: false
+};
+```
 
-### Advanced Configuration
+这个“聚合”操作，我们不希望是手写的，最好是一个 高阶组件 + 表单项组件规范 的方式，就能自动实现所有功能。业界有现成的方案，如 `rc-form`。当然使用 `zent` 也是满足的。
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### 3、values + 对象描述 => 组件
 
-### Deployment
+“对象描述”的基本两要素是：组件名 和 表单项名。
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+“对象描述”的次要要素有：\_show，通过返回 boolean 表示当前表单项的显隐。
 
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```jsx
+// 对象描述
+[
+  {
+    _component: "InputItem",
+    _name: "form_item_name",
+    _show: values =>
+      values.item_a_value === "hello" && values.item_b_value === "world"
+  }
+];
+```
