@@ -40,7 +40,7 @@ zForm 将提供一种更优雅的方案。
 
 通过以上的分析，可以得出一个结论：
 
-没必要为每个“动态的表单项”设置一个单独的 `state`，可以通过整个表单数据做为 values，加逻辑判断，最终实现一样的功能：`values.item_a_value + values.item_b_value => 表单项C显隐`
+没必要为每个“动态的表单项”设置一个单独的 `state`，可以通过对整个表单数据做聚合，最终成为 values 对象，最终实现一样的功能：`values.item_a_value + values.item_b_value => 表单项C显隐`
 
 ### 2、如何用一个优雅的方式，聚合表单数据？
 
@@ -55,7 +55,7 @@ state = {
 };
 ```
 
-上面的表单数据，更加优雅的方式是：
+对第一种进行聚合后：
 
 ```jsx
 // 第二种
@@ -88,4 +88,15 @@ state = {
       values.item_a_value === "hello" && values.item_b_value === "world"
   }
 ];
+```
+
+上面的“对象描述”的含义是生成如下：
+
+```jsx
+// jsx代码
+{
+  values.item_a_value === "hello" && values.item_b_value === "world" && (
+    <InputItem _name="form_item_name" />
+  );
+}
 ```
