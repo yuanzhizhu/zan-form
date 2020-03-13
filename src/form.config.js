@@ -94,8 +94,8 @@ export default [
     _component: "FormSelectField",
     _name: "frameworker",
     _show: values => values.language === "javascript",
-    label: "开发框架",
-    required: "请选择开发框架",
+    label: "前端框架",
+    required: "请选择前端开发框架",
     data: [
       {
         text: "React",
@@ -115,8 +115,8 @@ export default [
     _component: "FormSelectField",
     _name: "frameworker",
     _show: values => values.language === "java",
-    label: "开发框架",
-    required: "请选择开发框架",
+    label: "后端框架",
+    required: "请选择后端开发框架",
     data: [
       {
         text: "Spring",
