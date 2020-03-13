@@ -8,7 +8,7 @@ zForm 是一个通过“对象描述”生成“组件”的一个库。该库�
 
 ## 在线示例
 
-点击查看[在线示例](https://yuanzhizhu.github.io/json-form/build/index.html)
+如果想了解更多，点击查看[在线示例](https://yuanzhizhu.github.io/json-form/build/index.html)
 
 ## 背景
 
@@ -18,7 +18,219 @@ zForm 是一个通过“对象描述”生成“组件”的一个库。该库�
 
 zForm 将提供一种更优雅的方案。
 
-## 演化思路
+## 使用方式
+
+目前 zent 中的大部分组件，皆支持通过 zForm 使用。
+
+### 1、基本用法如下：
+
+```js
+// form.config.js
+[
+  {
+    _component: "FormInputField",
+    _name: "name",
+    label: "姓名",
+    required: "请输入您的名字",
+    placeholder: "请输入名字"
+  }
+];
+```
+
+最终将生成如下的 jsx：
+
+```jsx
+<FormInputField
+  name="name"
+  label="姓名"
+  placeholder="请输入名字"
+  validations={{ required: true }}
+  validationErrors={{ required: "请输入您的名字" }}
+  required
+/>
+```
+
+### 2、格式化组件
+
+```js
+// form.config.js
+[
+  {
+    _component: "FormInputField",
+    _name: "age",
+    label: "年龄",
+    _format: $component => (
+      <div>
+        {$component}
+        <span>岁</span>
+      </div>
+    )
+  }
+];
+```
+
+最终将生成如下的 jsx：
+
+```jsx
+<div>
+  <FormInputField name="age" label="年龄" />
+  <span>岁</span>
+</div>
+```
+
+### 3、动态显隐表单
+
+```js
+// form.config.js
+[
+  {
+    _component: "FormSelectField",
+    _name: "framework",
+    label: "前端框架",
+    _show: values => values.job === "前端",
+    data: [
+      {
+        text: "React",
+        value: "react"
+      },
+      {
+        text: "Vue",
+        value: "vue"
+      }
+    ]
+  }
+];
+```
+
+最终将生成如下的 jsx：
+
+```jsx
+{
+  values.job === "前端" && (
+    <FormSelectField
+      name="framework"
+      label="前端框架"
+      data={[
+        {
+          text: "React",
+          value: "react"
+        },
+        {
+          text: "Vue",
+          value: "vue"
+        }
+      ]}
+    />
+  );
+}
+```
+
+### 4、自动获取数据
+
+```js
+// form.config.js
+[
+  {
+    _component: "FormSelectField",
+    _name: "province",
+    _fetch_data: () => axios("/province.json").then(res => res.data),
+    label: "省份",
+    data: []
+  }
+];
+```
+
+最终将生成如下的 jsx：
+
+```jsx
+class XyComponent {
+  state = {
+    provinceData: []
+  };
+
+  render = () => {
+    const { provinceData } = this.state;
+    return <FormSelectField name="province" label="省份" data={provinceData} />;
+  };
+
+  componentDidMount = () => {
+    axios("/province.json")
+      .then(res => res.data)
+      .then(provinceData => this.setState({ provinceData }));
+  };
+}
+```
+
+### 5、订阅模式，并提供“重启组件”的方法
+
+```js
+// form.config.js
+[
+  {
+    _component: "FormSelectField",
+    _name: "city",
+    _fetch_data: values => axios(`${values.city}.json`).then(res => res.data),
+    _subscribe: (prevValues, values, restart) => {
+      if (values.province !== prevValues.province) {
+        // restart()用来重启组件
+        // 组件重启后将触发_fetch_data()
+        restart();
+      }
+    },
+    label: "城市",
+    data: []
+  }
+];
+```
+
+最终将生成如下的 jsx：
+
+```jsx
+class XyComponent {
+  /* 此处逻辑，同上面提到的第4点 */
+}
+
+// @订阅函数
+// 当values.province !== prevValues.province时，restart()：
+// 卸载组件 => 重新装载组件 => 重新请求数据
+```
+
+### 6、Slot 插槽
+
+```js
+// form.config.js
+[
+  {
+    _show: values => values.greet === "go_greet",
+    _slot: "im_slot"
+  }
+];
+
+// App.jsx
+zform(formConfig, this)(
+  <React.Fragment>
+    <Slot id="im_slot">
+      <div>Hello,World</div>
+    </Slot>
+  </React.Fragment>
+);
+```
+
+最终将生成如下的 jsx：
+
+```jsx
+{
+  values.greet === "go_greet" && <div>Hello,World</div>;
+}
+```
+
+### 7、注册外部组件
+
+```js
+zForm.register("MyComponent", MyComponent);
+```
+
+## 设计心得
 
 ### 1、是否有必要针对每一个“动态的表单项”，单独设置一个 `state` 来控制显隐？
 
@@ -78,7 +290,7 @@ state = {
 
 “对象描述”的次要要素有：\_show，通过返回 boolean 表示当前表单项的显隐。
 
-```jsx
+```js
 // 对象描述
 [
   {

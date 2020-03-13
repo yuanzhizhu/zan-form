@@ -53,12 +53,10 @@ class ResourceRegisterForm extends React.Component {
             onSubmit={handleSubmit(this.submit)}
           >
             {zform(formConfig, this)(
-              <React.Fragment>
-                <Slot id="react-banner">
-                  <div>前端框架选择React后，显示该Slot</div>
-                  <img src={ReactImg} alt="react-img" />
-                </Slot>
-              </React.Fragment>
+              <Slot id="react-banner">
+                <div>前端框架选择React后，显示该Slot</div>
+                <img src={ReactImg} alt="react-img" />
+              </Slot>
             )}
             <div className="zent-form__form-actions">
               <Button type="primary" htmlType="submit">
