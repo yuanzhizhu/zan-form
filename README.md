@@ -60,13 +60,13 @@ zForm 将提供一种更优雅的方案。
   {
     _component: "FormInputField",
     _name: "age",
-    label: "年龄",
     _format: $component => (
       <div>
         {$component}
         <span>岁</span>
       </div>
-    )
+    ),
+    label: "年龄",
   }
 ];
 ```
@@ -90,8 +90,8 @@ zForm 将提供一种更优雅的方案。
   {
     _component: "FormSelectField",
     _name: "framework",
-    label: "前端框架",
     _show: values => values.job === "前端",
+    label: "前端框架",
     data: [
       {
         text: "React",
@@ -182,7 +182,10 @@ class XyComponent {
   {
     _component: "FormSelectField",
     _name: "city",
-    _fetch_data: values => axios(`/get_city_by_province?province=${values.province}`).then(res => res.data),
+    _fetch_data: values =>
+      axios(`/get_city_by_province?province=${values.province}`).then(
+        res => res.data
+      ),
     _subscribe: (prevValues, values, restart) => {
       // 如果“省份”改变，则重启组件
       if (values.province !== prevValues.province) {
@@ -248,7 +251,7 @@ zform(formConfig, this)(
 zForm.register("MyComponent", MyComponent);
 ```
 
-## 设计心得
+## 设计理念
 
 ### 1、是否有必要针对每一个“动态的表单项”，单独设置一个 `state` 来控制显隐？
 
@@ -300,13 +303,11 @@ state = {
 };
 ```
 
-这个“聚合”操作，我们不希望是手写的，最好是一个 高阶组件 + 表单项组件规范 的方式，就能自动实现所有功能。业界有现成的方案，如 `rc-form`。当然使用 `zent` 也是满足的。
+这个“聚合”操作，我们不希望是手写的，最好是一个 高阶组件 + 表单项组件规范 的方式，就能自动实现所有功能。业界有现成的方案，如 `rc-form`。当然使用 `zent` 也是满足的。当然，这一步是不需要 zForm 做的。此处提到，只是方便理解一些设计。
 
 ### 3、values + 对象描述 => 组件
 
 “对象描述”的基本两要素是：组件名 和 表单项名。
-
-“对象描述”的次要要素有：\_show，通过返回 boolean 表示当前表单项的显隐。
 
 ```js
 // 对象描述
