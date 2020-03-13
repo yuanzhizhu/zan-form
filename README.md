@@ -52,7 +52,7 @@ zForm 将提供一种更优雅的方案。
 
 ### 2、格式化组件
 
-通过 `_format` 方法即实现
+通过 `_format($component)` 方法即实现
 
 ```js
 // form.config.js
@@ -82,7 +82,7 @@ zForm 将提供一种更优雅的方案。
 
 ### 3、动态显隐表单
 
-通过 `_show` 方法即可实现。返回 true 表示显示；返回 false 表示隐藏
+通过 `_show(values)` 方法即可实现。返回 true 表示显示；返回 false 表示隐藏
 
 ```js
 // form.config.js
@@ -131,7 +131,7 @@ zForm 将提供一种更优雅的方案。
 
 ### 4、自动获取数据
 
-通过 `_fetch_data` 方法，该方法需要最终返回一个 Promise，并且 resolve 需要用到的数据
+通过 `_fetch_data()` 方法可以实现自动取数据，而无需在 componentDidMount 里面手动操作。该方法约定需要最终返回一个 Promise，并且 resolve 需要用到的数据。
 
 ```js
 // form.config.js
@@ -169,19 +169,23 @@ class XyComponent {
 
 ### 5、订阅模式，并提供“重启组件”的方法
 
-通过 `_subscribe` 可做订阅，当 values 改变时触发。同时第三个参数是 restart，可用来销毁并重启组件。每次重启后，组件将会是纯净的。
+通过 `_subscribe(prevValues, values, restart)` 可做订阅，当 values 改变时触发。
+
+同时第三个参数是 restart，调用后来销毁并重启组件。
+
+每次重启后，组件将会是纯净的。同时重启后，将自动触发 `_fetch_data` 函数。
 
 ```js
 // form.config.js
+// 这是一个根据“省份”去动态取“该省份下城市列表”的组件描述
 [
   {
     _component: "FormSelectField",
     _name: "city",
-    _fetch_data: values => axios(`${values.city}.json`).then(res => res.data),
+    _fetch_data: values => axios(`/get_city_by_province?province=${values.province}`).then(res => res.data),
     _subscribe: (prevValues, values, restart) => {
+      // 如果“省份”改变，则重启组件
       if (values.province !== prevValues.province) {
-        // restart()用来重启组件
-        // 组件重启后将触发_fetch_data()
         restart();
       }
     },
@@ -205,7 +209,9 @@ class XyComponent {
 
 ### 6、Slot 插槽
 
-当特殊需求下，有时候需要用到插槽 Slot。通过 `_slot` 即可定义。若该项定义为插槽，则该项仅支持 `_show` 方法
+当特殊需求下，有时候需要用到插槽 Slot。通过 `_slot` 即可定义。
+
+若该项定义为插槽，则该项仅支持 `_show` 方法。
 
 ```js
 // form.config.js
@@ -236,7 +242,7 @@ zform(formConfig, this)(
 
 ### 7、注册外部组件
 
-某些情况下可能会需要注册外部组件库，如自己部门的业务组件库。可用 `zForm.register` 注册。
+某些情况下可能会需要注册外部组件库，如自己部门的业务组件库。可用 `zForm.register()` 注册。
 
 ```js
 zForm.register("MyComponent", MyComponent);
