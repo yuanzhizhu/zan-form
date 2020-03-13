@@ -198,18 +198,6 @@ class XyComponent {
 ];
 ```
 
-最终将生成如下的 jsx：
-
-```jsx
-class XyComponent {
-  /* 此处逻辑，同上面提到的第4点 */
-}
-
-// @订阅函数
-// 当values.province !== prevValues.province时，restart()：
-// 卸载组件 => 重新装载组件 => 重新触发_fetch_data()
-```
-
 ### 6、Slot 插槽
 
 当特殊需求下，有时候需要用到插槽 Slot。通过 `_slot` 即可定义。
