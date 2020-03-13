@@ -52,6 +52,8 @@ zForm 将提供一种更优雅的方案。
 
 ### 2、格式化组件
 
+通过 `_format` 方法即实现
+
 ```js
 // form.config.js
 [
@@ -79,6 +81,8 @@ zForm 将提供一种更优雅的方案。
 ```
 
 ### 3、动态显隐表单
+
+通过 `_show` 方法即可实现。返回 true 表示显示；返回 false 表示隐藏
 
 ```js
 // form.config.js
@@ -127,6 +131,8 @@ zForm 将提供一种更优雅的方案。
 
 ### 4、自动获取数据
 
+通过 `_fetch_data` 方法，该方法需要最终返回一个 Promise，并且 resolve 需要用到的数据
+
 ```js
 // form.config.js
 [
@@ -163,6 +169,8 @@ class XyComponent {
 
 ### 5、订阅模式，并提供“重启组件”的方法
 
+通过 `_subscribe` 可做订阅，当 values 改变时触发。同时第三个参数是 restart，可用来销毁并重启组件。每次重启后，组件将会是纯净的。
+
 ```js
 // form.config.js
 [
@@ -192,10 +200,12 @@ class XyComponent {
 
 // @订阅函数
 // 当values.province !== prevValues.province时，restart()：
-// 卸载组件 => 重新装载组件 => 重新请求数据
+// 卸载组件 => 重新装载组件 => 重新触发_fetch_data()
 ```
 
 ### 6、Slot 插槽
+
+当特殊需求下，有时候需要用到插槽 Slot。通过 `_slot` 即可定义。若该项定义为插槽，则该项仅支持 `_show` 方法
 
 ```js
 // form.config.js
@@ -225,6 +235,8 @@ zform(formConfig, this)(
 ```
 
 ### 7、注册外部组件
+
+某些情况下可能会需要注册外部组件库，如自己部门的业务组件库。可用 `zForm.register` 注册。
 
 ```js
 zForm.register("MyComponent", MyComponent);
