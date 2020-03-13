@@ -80,7 +80,7 @@ zForm 将提供一种更优雅的方案。
 </div>
 ```
 
-### 3、动态显隐表单
+### 3、动态显隐组件
 
 通过 `_show(values)` 方法即可实现。返回 true 表示显示；返回 false 表示隐藏
 
@@ -129,9 +129,11 @@ zForm 将提供一种更优雅的方案。
 }
 ```
 
-### 4、自动获取数据
+### 4、组件自动获取数据
 
-通过 `_fetch_data()` 方法可以实现自动取数据，而无需在 componentDidMount 里面手动操作。该方法约定需要最终返回一个 Promise，并且 resolve 需要用到的数据。
+通过 `_fetch_data()` 方法可以实现自动取数据，而无需在 componentDidMount 里面编写代码。
+
+该方法约定需要最终返回一个 Promise，并且 resolve 需要用到的数据。
 
 ```js
 // form.config.js
