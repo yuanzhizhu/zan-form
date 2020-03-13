@@ -11,6 +11,10 @@ for (let key in Form) {
   componentLib[key] = componentDecorator(Form[key]);
 }
 
+const register = (name, component) => {
+  componentLib[name] = componentDecorator(component);
+};
+
 // 检验组件描述
 const validComponentDesc = componentDesc => {
   const fields = ["_name", "_component"];
@@ -47,22 +51,30 @@ const genKeyFn = (referCountMap = {}) => identifier => {
 };
 
 // 通过$slotsElementsFrag得到slotMap
-const getSlotMap = $slotsElementsFrag => {
+const getSlotMap = $root => {
   const slotMap = {};
 
-  if ($slotsElementsFrag) {
-    let $slotElements = $slotsElementsFrag.props.children;
-    if ($slotElements) {
-      $slotElements = Array.isArray($slotElements)
-        ? $slotElements
-        : [$slotElements];
-      for (let $slotElement of $slotElements) {
-        const { id, children } = $slotElement.props;
-        if (id === undefined) throw new Error("<Slot />中id为必传props");
-        slotMap[id] = children;
+  const travel = $root => {
+    if ($root.type === Slot) {
+      const { id, children } = $root.props;
+      if (id === undefined) throw new Error("<Slot></Slot>必传props.id");
+      if (children === undefined)
+        throw new Error("<Slot></Slot>中必须传入props.children");
+      slotMap[id] = children;
+    } else {
+      if ($root.props.children) {
+        const children = Array.isArray($root.props.children)
+          ? $root.props.children
+          : [$root.props.children];
+        for (let child of children) {
+          const $root = child;
+          travel($root);
+        }
       }
     }
-  }
+  };
+
+  travel($root);
 
   return slotMap;
 };
@@ -119,5 +131,6 @@ const zForm = (schema, formInstance) => $slotsElementsFrag => {
 };
 
 zForm.Slot = Slot;
+zForm.register = register;
 
 export default zForm;

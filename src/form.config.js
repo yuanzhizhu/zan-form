@@ -5,10 +5,6 @@ const prefix = /github/.test(window.location.host) ? "/json-form/build" : "";
 
 export default [
   {
-    _show: values => values.frameworker === "react",
-    _slot: "react-banner"
-  },
-  {
     _component: "FormInputField",
     _name: "name",
     label: "姓名",
@@ -89,6 +85,10 @@ export default [
         value: "java"
       }
     ]
+  },
+  {
+    _show: values => values.frameworker === "react",
+    _slot: "react-banner"
   },
   {
     _component: "FormSelectField",
