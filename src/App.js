@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Notify } from "zent";
+import { Form, Button } from "zent";
 import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
@@ -20,14 +20,30 @@ const highlightFormConfigHtml = hljs.highlight("javascript", formConfigText)
 const { createForm } = Form;
 const Slot = zform.Slot;
 
+const key = "zform_data";
+
 class ResourceRegisterForm extends React.Component {
   submit = values => {
-    Notify.success(JSON.stringify(values));
+    localStorage.setItem(key, JSON.stringify(values, null, 2));
+    this.forceUpdate();
+  };
+
+  fetchDataFromLocalstorage = () => {
+    const data = localStorage.getItem(key);
+    return data;
   };
 
   resetForm = () => {
     this.props.zentForm.resetFieldsValue();
   };
+
+  componentDidMount = () => {
+    let data = localStorage.getItem(key);
+    if (data) {
+      data = JSON.parse(data);
+      zform.setValues(data, this);
+    }
+  }
 
   render = () => {
     const { handleSubmit } = this.props;
@@ -60,13 +76,19 @@ class ResourceRegisterForm extends React.Component {
             )}
             <div className="zent-form__form-actions">
               <Button type="primary" htmlType="submit">
-                获取表单值
+                保存
               </Button>
               <Button type="primary" outline onClick={this.resetForm}>
-                重置表单值
+                重置
               </Button>
             </div>
           </Form>
+
+          <div style={{ textAlign: "center" }}>
+            <pre style={{ display: "inline-block", textAlign: "left" }}>
+              {this.fetchDataFromLocalstorage()}
+            </pre>
+          </div>
         </div>
 
         <div

@@ -50,6 +50,25 @@ const genKeyFn = (referCountMap = {}) => identifier => {
   return `${identifier}_${referCount}`;
 };
 
+const setValues = (data, formInstance) => {
+  if (data) {
+    const { zentForm } = formInstance.props;
+    let prevValues = null;
+
+    const setValuesAsync = () =>
+      setTimeout(() => {
+        const values = zentForm.getFormValues();
+        if (JSON.stringify(prevValues) !== JSON.stringify(values)) {
+          prevValues = values;
+          zentForm.setFieldsValue(data);
+          setValuesAsync();
+        }
+      }, 0);
+
+    setValuesAsync();
+  }
+};
+
 // 通过$slotsElementsFrag得到slotMap
 const getSlotMap = $root => {
   const slotMap = {};
@@ -132,5 +151,6 @@ const zForm = (schema, formInstance) => $slotsElementsFrag => {
 
 zForm.Slot = Slot;
 zForm.register = register;
+zForm.setValues = setValues;
 
 export default zForm;
