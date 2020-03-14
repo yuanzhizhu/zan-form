@@ -2,7 +2,8 @@
   "name": "zform",
   "version": "1.0.0",
   "description": "一个json转表单的方案",
-  "main": "src/index.js",
+  "main": "cjs/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +19,16 @@
   "bugs": {
     "url": "https://github.com/yuanzhizhu/json-form/issues"
   },
-  "homepage": "https://github.com/yuanzhizhu/json-form#readme"
+  "homepage": "https://github.com/yuanzhizhu/json-form#readme",
+  "peerDependencies": {
+    "react": ">=16",
+    "zent": ">=6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "rollup-plugin-babel": "^4.4.0"
+  }
 }
