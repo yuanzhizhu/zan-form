@@ -21,7 +21,7 @@ zForm 将提供一种更优雅的方案。
 ## 初始化
 
 ```js
-zform(formConfig, this)();
+zForm(formConfig, this)();
 ```
 
 ## 使用方式
@@ -222,7 +222,7 @@ class XyComponent {
 ];
 
 // App.jsx
-zform(formConfig, this)(
+zForm(formConfig, this)(
   <React.Fragment>
     <Slot id="im_slot">
       <div>Hello,World</div>
@@ -250,7 +250,7 @@ zForm.register("MyComponent", MyComponent);
 ## 8、设置初始化值
 
 ```js
-zform.setValues(initData, this);
+zForm.setValues(initData, this);
 ```
 
 initData为 `{ key1: value1, key2: value2 }` 的格式

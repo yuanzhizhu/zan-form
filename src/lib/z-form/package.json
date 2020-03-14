@@ -1,5 +1,5 @@
 {
-  "name": "zform",
+  "name": "z-form",
   "version": "1.0.0",
   "description": "一个json转表单的方案",
   "main": "cjs/index.js",
