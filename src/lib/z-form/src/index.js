@@ -74,6 +74,8 @@ const getSlotMap = $root => {
   const slotMap = {};
 
   const travel = $root => {
+    if (!$root) return;
+
     if ($root.type === Slot) {
       const { id, children } = $root.props;
       if (id === undefined) throw new Error("<Slot></Slot>必传props.id");
