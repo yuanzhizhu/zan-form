@@ -1,6 +1,6 @@
 {
   "name": "zan-form",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "一个json转表单的方案",
   "main": "cjs/index.js",
   "module": "es/index.js",

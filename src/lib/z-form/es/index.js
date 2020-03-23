@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'zent';
+import { Form, Checkbox } from 'zent';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -245,6 +245,50 @@ var componentDecorator = function componentDecorator(Component) {
   });
 };
 
+var OldFormCheckboxGroupField = Form.FormCheckboxGroupField;
+
+var FormCheckboxGroupField = /*#__PURE__*/function (_React$Component) {
+  _inherits(FormCheckboxGroupField, _React$Component);
+
+  function FormCheckboxGroupField() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, FormCheckboxGroupField);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormCheckboxGroupField)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "render", function () {
+      var _this$props = _this.props,
+          _this$props$data = _this$props.data,
+          data = _this$props$data === void 0 ? [] : _this$props$data,
+          restProps = _objectWithoutProperties(_this$props, ["data"]);
+
+      return React.createElement(OldFormCheckboxGroupField, _extends({
+        value: []
+      }, restProps), data.map(function (item, index) {
+        var value = item.value,
+            text = item.text,
+            restProps = _objectWithoutProperties(item, ["value", "text"]);
+
+        return React.createElement(Checkbox, _extends({}, restProps, {
+          key: index,
+          value: value
+        }), text);
+      }));
+    });
+
+    return _this;
+  }
+
+  return FormCheckboxGroupField;
+}(React.Component);
+
 var componentLib = {};
 
 for (var key in Form) {
@@ -253,8 +297,9 @@ for (var key in Form) {
 
 var register = function register(name, component) {
   componentLib[name] = componentDecorator(component);
-}; // 检验组件描述
+};
 
+register("FormCheckboxGroupField", FormCheckboxGroupField); // 检验组件描述
 
 var validComponentDesc = function validComponentDesc(componentDesc) {
   var fields = ["_name", "_component"];
@@ -318,6 +363,8 @@ var getSlotMap = function getSlotMap($root) {
   var slotMap = {};
 
   var travel = function travel($root) {
+    if (!$root) return;
+
     if ($root.type === Slot) {
       var _$root$props = $root.props,
           id = _$root$props.id,

@@ -1,10 +1,11 @@
-// 暂不支持Radio和Checkbox
+// 暂不支持Radio
 
 import React from "react";
 import { Form } from "zent";
 
 import Slot from "./slot";
 import componentDecorator from "./componentDecorator";
+import FormCheckboxGroupField from "./FormCheckboxGroupField";
 
 const componentLib = {};
 for (let key in Form) {
@@ -14,6 +15,8 @@ for (let key in Form) {
 const register = (name, component) => {
   componentLib[name] = componentDecorator(component);
 };
+
+register("FormCheckboxGroupField", FormCheckboxGroupField);
 
 // 检验组件描述
 const validComponentDesc = componentDesc => {
