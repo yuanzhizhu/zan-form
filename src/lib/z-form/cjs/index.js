@@ -293,6 +293,48 @@ var FormCheckboxGroupField = /*#__PURE__*/function (_React$Component) {
   return FormCheckboxGroupField;
 }(React.Component);
 
+var OldFormRadioGroupField = zent.Form.FormRadioGroupField;
+
+var FormRadioGroupField = /*#__PURE__*/function (_React$Component) {
+  _inherits(FormRadioGroupField, _React$Component);
+
+  function FormRadioGroupField() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, FormRadioGroupField);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormRadioGroupField)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "render", function () {
+      var _this$props = _this.props,
+          _this$props$data = _this$props.data,
+          data = _this$props$data === void 0 ? [] : _this$props$data,
+          restProps = _objectWithoutProperties(_this$props, ["data"]);
+
+      return React.createElement(OldFormRadioGroupField, restProps, data.map(function (item, index) {
+        var value = item.value,
+            text = item.text,
+            restProps = _objectWithoutProperties(item, ["value", "text"]);
+
+        return React.createElement(zent.Radio, _extends({}, restProps, {
+          key: index,
+          value: value
+        }), text);
+      }));
+    });
+
+    return _this;
+  }
+
+  return FormRadioGroupField;
+}(React.Component);
+
 var componentLib = {};
 
 for (var key in zent.Form) {
@@ -303,7 +345,8 @@ var register = function register(name, component) {
   componentLib[name] = componentDecorator(component);
 };
 
-register("FormCheckboxGroupField", FormCheckboxGroupField); // 检验组件描述
+register("FormCheckboxGroupField", FormCheckboxGroupField);
+register("FormRadioGroupField", FormRadioGroupField); // 检验组件描述
 
 var validComponentDesc = function validComponentDesc(componentDesc) {
   var fields = ["_name", "_component"];
