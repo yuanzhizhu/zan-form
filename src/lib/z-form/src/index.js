@@ -1,11 +1,10 @@
-// 暂不支持Radio
-
 import React from "react";
 import { Form } from "zent";
 
 import Slot from "./slot";
 import componentDecorator from "./componentDecorator";
 import FormCheckboxGroupField from "./FormCheckboxGroupField";
+import FormRadioGroupField from "./FormRadioGroupField";
 
 const componentLib = {};
 for (let key in Form) {
@@ -17,6 +16,7 @@ const register = (name, component) => {
 };
 
 register("FormCheckboxGroupField", FormCheckboxGroupField);
+register("FormRadioGroupField", FormRadioGroupField);
 
 // 检验组件描述
 const validComponentDesc = componentDesc => {
