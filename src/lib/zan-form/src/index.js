@@ -37,11 +37,15 @@ const addValidator = props => {
   props.validations = props.validations || {};
   props.validationErrors = props.validationErrors || {};
 
-  if (props.required) {
+  if (typeof props.required === "string") {
     const requiredText = props.required;
     props.required = true;
     props.validations.required = true;
     props.validationErrors.required = requiredText;
+  } else if (props.required === true) {
+    props.required = true;
+  } else if (props.required === false) {
+    props.required = false;
   }
 };
 
@@ -82,8 +86,6 @@ const getSlotMap = $root => {
     if ($root.type === Slot) {
       const { id, children } = $root.props;
       if (id === undefined) throw new Error("<Slot></Slot>必传props.id");
-      if (children === undefined)
-        throw new Error("<Slot></Slot>中必须传入props.children");
       slotMap[id] = children;
     } else {
       if ($root.props.children) {

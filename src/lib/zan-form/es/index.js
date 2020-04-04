@@ -362,11 +362,15 @@ var addValidator = function addValidator(props) {
   props.validations = props.validations || {};
   props.validationErrors = props.validationErrors || {};
 
-  if (props.required) {
+  if (typeof props.required === "string") {
     var requiredText = props.required;
     props.required = true;
     props.validations.required = true;
     props.validationErrors.required = requiredText;
+  } else if (props.required === true) {
+    props.required = true;
+  } else if (props.required === false) {
+    props.required = false;
   }
 }; // 生成key的函数
 
@@ -413,7 +417,6 @@ var getSlotMap = function getSlotMap($root) {
           id = _$root$props.id,
           children = _$root$props.children;
       if (id === undefined) throw new Error("<Slot></Slot>必传props.id");
-      if (children === undefined) throw new Error("<Slot></Slot>中必须传入props.children");
       slotMap[id] = children;
     } else {
       if ($root.props.children) {
