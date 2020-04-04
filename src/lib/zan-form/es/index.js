@@ -451,7 +451,7 @@ var getSlotMap = function getSlotMap($root) {
   return slotMap;
 };
 
-var zForm = function zForm(schema, formInstance) {
+var zanForm = function zanForm(schema, formInstance) {
   return function ($slotsElementsFrag) {
     var values = formInstance.props.zentForm.getFormValues();
     var slotMap = getSlotMap($slotsElementsFrag);
@@ -498,8 +498,8 @@ var zForm = function zForm(schema, formInstance) {
   };
 };
 
-zForm.Slot = Slot;
-zForm.register = register;
-zForm.setValues = setValues;
+zanForm.Slot = Slot;
+zanForm.register = register;
+zanForm.setValues = setValues;
 
-export default zForm;
+export default zanForm;

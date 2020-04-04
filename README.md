@@ -1,14 +1,14 @@
-# zForm 文档
+# zanForm 文档
 
 ## 简述
 
-zForm 是一个通过“对象描述”生成“组件”的一个库。该库基于 `zent`。
+zanForm 是一个通过“对象描述”生成“组件”的一个库。该库基于 `zent`。
 
 [zent](https://github.com/youzan/zent) 是一个有赞开源的 UI 组件库，对标蚂蚁金服的 `Ant Design`。
 
 ## 在线示例
 
-如果想了解更多，点击查看[在线示例](https://yuanzhizhu.github.io/json-form/build/index.html)
+如果想了解更多，点击查看[在线示例](https://yuanzhizhu.github.io/zan-form/build/index.html)
 
 ## 背景
 
@@ -16,17 +16,17 @@ zForm 是一个通过“对象描述”生成“组件”的一个库。该库�
 
 这种场景一个普遍的处理方法是，针对每一个“动态的表单项”，单独设置一个 `state` 来控制显隐。这是一个最简单，最暴力的处理方法。
 
-zForm 将提供一种更优雅的方案。
+zanForm 将提供一种更优雅的方案。
 
 ## 初始化
 
 ```js
-zForm(formConfig, this)();
+zanForm(formConfig, this)();
 ```
 
 ## 使用方式
 
-目前 zent 中的大部分组件，皆支持通过 zForm 使用。
+目前 zent 中的大部分组件，皆支持通过 zanForm 使用。
 
 ### 1、基本用法如下：
 
@@ -222,7 +222,7 @@ class XyComponent {
 ];
 
 // App.jsx
-zForm(formConfig, this)(
+zanForm(formConfig, this)(
   <React.Fragment>
     <Slot id="im_slot">
       <div>Hello,World</div>
@@ -241,16 +241,16 @@ zForm(formConfig, this)(
 
 ### 7、注册外部组件
 
-某些情况下可能会需要注册外部组件库，如自己部门的业务组件库。可用 `zForm.register()` 注册。
+某些情况下可能会需要注册外部组件库，如自己部门的业务组件库。可用 `zanForm.register()` 注册。
 
 ```js
-zForm.register("MyComponent", MyComponent);
+zanForm.register("MyComponent", MyComponent);
 ```
 
 ## 8、设置初始化值
 
 ```js
-zForm.setValues(initData, this);
+zanForm.setValues(initData, this);
 ```
 
 initData为 `{ key1: value1, key2: value2 }` 的格式
@@ -307,7 +307,7 @@ state = {
 };
 ```
 
-这个“聚合”操作，我们不希望是手写的，最好是一个 高阶组件 + 表单项组件规范 的方式，就能自动实现所有功能。业界有现成的方案，如 `rc-form`。当然使用 `zent` 也是满足的。当然，这一步是不需要 zForm 做的。此处提到，只是方便理解一些设计。
+这个“聚合”操作，我们不希望是手写的，最好是一个 高阶组件 + 表单项组件规范 的方式，就能自动实现所有功能。业界有现成的方案，如 `rc-form`。当然使用 `zent` 也是满足的。当然，这一步是不需要 zanForm 做的。此处提到，只是方便理解一些设计。
 
 ### 3、values + 对象描述 => 组件
 

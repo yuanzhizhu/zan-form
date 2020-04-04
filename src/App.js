@@ -5,7 +5,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
 
 import ReactImg from "./static/react.jpeg";
-import zForm from "./lib/z-form";
+import zanForm from "./lib/zan-form";
 import formConfig from "./form.config";
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -18,9 +18,9 @@ const highlightFormConfigHtml = hljs.highlight("javascript", formConfigText)
   .value;
 
 const { createForm } = Form;
-const Slot = zForm.Slot;
+const Slot = zanForm.Slot;
 
-const key = "zForm_data";
+const key = "zanForm_data";
 
 class ResourceRegisterForm extends React.Component {
   submit = values => {
@@ -41,7 +41,7 @@ class ResourceRegisterForm extends React.Component {
     let data = localStorage.getItem(key);
     if (data) {
       data = JSON.parse(data);
-      zForm.setValues(data, this);
+      zanForm.setValues(data, this);
     }
   }
 
@@ -68,7 +68,7 @@ class ResourceRegisterForm extends React.Component {
             horizontal
             onSubmit={handleSubmit(this.submit)}
           >
-            {zForm(formConfig, this)(
+            {zanForm(formConfig, this)(
               <Slot id="react-banner">
                 <div>前端框架选择React后，显示该Slot</div>
                 <img src={ReactImg} alt="react-img" />

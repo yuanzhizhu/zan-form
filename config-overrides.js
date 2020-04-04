@@ -9,7 +9,7 @@ module.exports = function override(config, env) {
     }
   ]);
   if (env === "production") {
-    config.output.publicPath = "/json-form/build";
+    config.output.publicPath = "/zan-form/build";
   }
   return config;
 };

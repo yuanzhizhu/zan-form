@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-const prefix = /github/.test(window.location.host) ? "/json-form/build" : "";
+const prefix = /github/.test(window.location.host) ? "/zan-form/build" : "";
 
 export default [
   {

@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yuanzhizhu/json-form.git"
+    "url": "git+https://github.com/yuanzhizhu/zan-form.git"
   },
   "keywords": [
-    "json-form"
+    "zan-form"
   ],
   "author": "竹致远",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yuanzhizhu/json-form/issues"
+    "url": "https://github.com/yuanzhizhu/zan-form/issues"
   },
-  "homepage": "https://github.com/yuanzhizhu/json-form#readme",
+  "homepage": "https://github.com/yuanzhizhu/zan-form#readme",
   "peerDependencies": {
     "react": ">=16",
     "zent": ">=6"

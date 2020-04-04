@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/json-form/buildprecache-manifest.2a48c4c91153b17c5108ba508fddd280.js"
+  "/zan-form/buildprecache-manifest.5a2e19e615e17541baedc03a535f6763.js"
 );
 
 self.addEventListener('message', (event) => {

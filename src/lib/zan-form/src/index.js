@@ -103,7 +103,7 @@ const getSlotMap = $root => {
   return slotMap;
 };
 
-const zForm = (schema, formInstance) => $slotsElementsFrag => {
+const zanForm = (schema, formInstance) => $slotsElementsFrag => {
   const values = formInstance.props.zentForm.getFormValues();
   const slotMap = getSlotMap($slotsElementsFrag);
   const genKeyByIdentifier = genKeyFn();
@@ -154,8 +154,8 @@ const zForm = (schema, formInstance) => $slotsElementsFrag => {
   return formElement;
 };
 
-zForm.Slot = Slot;
-zForm.register = register;
-zForm.setValues = setValues;
+zanForm.Slot = Slot;
+zanForm.register = register;
+zanForm.setValues = setValues;
 
-export default zForm;
+export default zanForm;
