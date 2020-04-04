@@ -20,6 +20,10 @@ register("FormRadioGroupField", FormRadioGroupField);
 
 // 检验组件描述
 const validComponentDesc = componentDesc => {
+  if (componentDesc.children !== undefined) {
+    throw new Error("暂时不支持props.children");
+  }
+
   const fields = ["_name", "_component"];
 
   return fields.every(field => {

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "zent";
 import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/monokai.css";
 
 import ReactImg from "./static/react.jpeg";
 import zanForm from "./lib/zan-form";
@@ -97,10 +97,11 @@ class ResourceRegisterForm extends React.Component {
             boxSizing: "border-box",
             maxHeight: "100vh",
             borderLeft: "1px solid #aaa",
-            paddingLeft: 12
           }}
         >
-          <pre dangerouslySetInnerHTML={{ __html: highlightFormConfigHtml }} />
+          <pre>
+            <code className="hljs" dangerouslySetInnerHTML={{ __html: highlightFormConfigHtml }} />
+          </pre>
         </div>
       </div>
     );

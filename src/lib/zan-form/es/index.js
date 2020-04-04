@@ -345,6 +345,10 @@ register("FormCheckboxGroupField", FormCheckboxGroupField);
 register("FormRadioGroupField", FormRadioGroupField); // 检验组件描述
 
 var validComponentDesc = function validComponentDesc(componentDesc) {
+  if (componentDesc.children !== undefined) {
+    throw new Error("暂时不支持props.children");
+  }
+
   var fields = ["_name", "_component"];
   return fields.every(function (field) {
     var fieldValue = componentDesc[field];

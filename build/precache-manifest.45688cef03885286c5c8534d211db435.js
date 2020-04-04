@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "56a56c4e32e36a4a4073de2a0a17686b",
+    "revision": "9aef3615f90d9e5dc929d5986617625c",
     "url": "/zan-form/buildindex.html"
   },
   {
-    "revision": "10ab713e9f69bf19c4fc",
-    "url": "/zan-form/buildstatic/css/2.13963e70.chunk.css"
+    "revision": "29bb0c2e330ec8737a83",
+    "url": "/zan-form/buildstatic/css/2.9c805fd5.chunk.css"
   },
   {
-    "revision": "bc977af84b4bbc2d5fa7",
+    "revision": "d1f25e22597c62dc7e47",
     "url": "/zan-form/buildstatic/css/main.2d7406cc.chunk.css"
   },
   {
-    "revision": "10ab713e9f69bf19c4fc",
+    "revision": "29bb0c2e330ec8737a83",
     "url": "/zan-form/buildstatic/js/2.e3e64a4e.chunk.js"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/zan-form/buildstatic/js/2.e3e64a4e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "bc977af84b4bbc2d5fa7",
-    "url": "/zan-form/buildstatic/js/main.4290ec24.chunk.js"
+    "revision": "d1f25e22597c62dc7e47",
+    "url": "/zan-form/buildstatic/js/main.9358f2c4.chunk.js"
   },
   {
     "revision": "d0879cfcba509380f332",
