@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "zent";
+import { Form, Button, Notify } from "zent";
 import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/monokai.css";
@@ -41,9 +41,11 @@ class ResourceRegisterForm extends React.Component {
     let data = localStorage.getItem(key);
     if (data) {
       data = JSON.parse(data);
-      zanForm.setValues(data, this);
+      zanForm.setValues(data, this, () => {
+        Notify.success("回显成功");
+      });
     }
-  }
+  };
 
   render = () => {
     const { handleSubmit } = this.props;
@@ -96,11 +98,14 @@ class ResourceRegisterForm extends React.Component {
             overflow: "scroll",
             boxSizing: "border-box",
             maxHeight: "100vh",
-            borderLeft: "1px solid #aaa",
+            borderLeft: "1px solid #aaa"
           }}
         >
           <pre>
-            <code className="hljs" dangerouslySetInnerHTML={{ __html: highlightFormConfigHtml }} />
+            <code
+              className="hljs"
+              dangerouslySetInnerHTML={{ __html: highlightFormConfigHtml }}
+            />
           </pre>
         </div>
       </div>

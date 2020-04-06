@@ -392,7 +392,7 @@ var genKeyFn = function genKeyFn() {
   };
 };
 
-var setValues = function setValues(data, formInstance) {
+var setValues = function setValues(data, formInstance, callback) {
   if (data) {
     var zentForm = formInstance.props.zentForm;
     var prevValues = null;
@@ -405,6 +405,8 @@ var setValues = function setValues(data, formInstance) {
           prevValues = values;
           zentForm.setFieldsValue(data);
           setValuesAsync();
+        } else {
+          callback && callback();
         }
       }, 0);
     };

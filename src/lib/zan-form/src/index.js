@@ -61,7 +61,7 @@ const genKeyFn = (referCountMap = {}) => identifier => {
   return `${identifier}_${referCount}`;
 };
 
-const setValues = (data, formInstance) => {
+const setValues = (data, formInstance, callback) => {
   if (data) {
     const { zentForm } = formInstance.props;
     let prevValues = null;
@@ -73,6 +73,8 @@ const setValues = (data, formInstance) => {
           prevValues = values;
           zentForm.setFieldsValue(data);
           setValuesAsync();
+        } else {
+          callback && callback();
         }
       }, 0);
 
