@@ -6,7 +6,7 @@
 
 zanForm 是一个通过“对象描述”生成“组件”的一个库。该库基于 `zent`。
 
-[zent](https://github.com/youzan/zent) 是一个有赞开源的 UI 组件库，对标蚂蚁金服的 `Ant Design`。
+[zent](https://github.com/youzan/zent) 是一个开源的 UI 组件库，对标蚂蚁金服的 `Ant Design`。
 
 [点击查看项目github仓库](https://github.com/yuanzhizhu/zan-form)
 
