@@ -10942,6 +10942,11 @@ yargs@^13.3.0:
     y18n "^4.0.0"
     yargs-parser "^13.1.1"
 
+zan-form-core@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/zan-form-core/-/zan-form-core-1.0.0.tgz#356bd85e023014cd9408a3fbc182652b809ad617"
+  integrity sha512-ktxQ/o32zqeM4OrrdReTaKdFlIyfDvcaKNCH6XM6VF5wVTeKmNedFqN9h5UCQmNam+ghLvFMIdV0VRoE3mlkcw==
+
 zan-jquery@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/zan-jquery/download/zan-jquery-1.0.2.tgz#d9a45088d0d152cfe41729aca70b6682e30ce5cf"
