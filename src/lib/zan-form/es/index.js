@@ -259,4 +259,8 @@ var setValues = function setValues(data, formInstance, callback) {
 zanFormCore.setValues = setValues;
 zanFormCore.onProps = addValidator;
 
+zanFormCore.howToGetValues = function (formInstance) {
+  return formInstance.props.zentForm.getFormValues();
+};
+
 export default zanFormCore;
