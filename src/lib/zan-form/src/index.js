@@ -3,13 +3,6 @@ import { Form } from "zent";
 import FormCheckboxGroupField from "./FormCheckboxGroupField";
 import FormRadioGroupField from "./FormRadioGroupField";
 
-for (let key in Form) {
-  zanFormCore.register(key, Form[key]);
-}
-
-zanFormCore.register("FormCheckboxGroupField", FormCheckboxGroupField);
-zanFormCore.register("FormRadioGroupField", FormRadioGroupField);
-
 // 为props增加validator
 const addValidator = props => {
   props.validations = props.validations || {};
@@ -33,6 +26,19 @@ zanFormCore.howToGetValues = formInstance => {
 };
 zanFormCore.howToSetValues = (formInstance, data) => {
   formInstance.props.zentForm.setFieldsValue(data);
+};
+zanFormCore.mapDecoratorStateToProps = {
+  get: props => props.data,
+  set: (props, data) => {
+    props.data = data;
+  }
+};
+
+for (let key in Form) {
+  zanFormCore.register(key, Form[key]);
 }
+
+zanFormCore.register("FormCheckboxGroupField", FormCheckboxGroupField);
+zanFormCore.register("FormRadioGroupField", FormRadioGroupField);
 
 export default zanFormCore;

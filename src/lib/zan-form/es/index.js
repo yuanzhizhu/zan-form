@@ -210,13 +210,6 @@ var FormRadioGroupField = /*#__PURE__*/function (_React$Component) {
   return FormRadioGroupField;
 }(React.Component);
 
-for (var key in Form) {
-  zanFormCore.register(key, Form[key]);
-}
-
-zanFormCore.register("FormCheckboxGroupField", FormCheckboxGroupField);
-zanFormCore.register("FormRadioGroupField", FormRadioGroupField); // 为props增加validator
-
 var addValidator = function addValidator(props) {
   props.validations = props.validations || {};
   props.validationErrors = props.validationErrors || {};
@@ -242,5 +235,21 @@ zanFormCore.howToGetValues = function (formInstance) {
 zanFormCore.howToSetValues = function (formInstance, data) {
   formInstance.props.zentForm.setFieldsValue(data);
 };
+
+zanFormCore.mapDecoratorStateToProps = {
+  get: function get(props) {
+    return props.data;
+  },
+  set: function set(props, data) {
+    props.data = data;
+  }
+};
+
+for (var key in Form) {
+  zanFormCore.register(key, Form[key]);
+}
+
+zanFormCore.register("FormCheckboxGroupField", FormCheckboxGroupField);
+zanFormCore.register("FormRadioGroupField", FormRadioGroupField);
 
 export default zanFormCore;
