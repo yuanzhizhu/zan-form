@@ -233,34 +233,14 @@ var addValidator = function addValidator(props) {
   }
 };
 
-var setValues = function setValues(data, formInstance, callback) {
-  if (data) {
-    var zentForm = formInstance.props.zentForm;
-    var prevValues = null;
-
-    var setValuesAsync = function setValuesAsync() {
-      return setTimeout(function () {
-        var values = zentForm.getFormValues();
-
-        if (JSON.stringify(prevValues) !== JSON.stringify(values)) {
-          prevValues = values;
-          zentForm.setFieldsValue(data);
-          setValuesAsync();
-        } else {
-          callback && callback();
-        }
-      }, 0);
-    };
-
-    setValuesAsync();
-  }
-};
-
-zanFormCore.setValues = setValues;
 zanFormCore.onProps = addValidator;
 
 zanFormCore.howToGetValues = function (formInstance) {
   return formInstance.props.zentForm.getFormValues();
+};
+
+zanFormCore.howToSetValues = function (formInstance, data) {
+  formInstance.props.zentForm.setFieldsValue(data);
 };
 
 export default zanFormCore;

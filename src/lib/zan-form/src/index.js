@@ -27,31 +27,12 @@ const addValidator = props => {
   }
 };
 
-const setValues = (data, formInstance, callback) => {
-  if (data) {
-    const { zentForm } = formInstance.props;
-    let prevValues = null;
-
-    const setValuesAsync = () =>
-      setTimeout(() => {
-        const values = zentForm.getFormValues();
-        if (JSON.stringify(prevValues) !== JSON.stringify(values)) {
-          prevValues = values;
-          zentForm.setFieldsValue(data);
-          setValuesAsync();
-        } else {
-          callback && callback();
-        }
-      }, 0);
-
-    setValuesAsync();
-  }
-};
-
-zanFormCore.setValues = setValues;
 zanFormCore.onProps = addValidator;
 zanFormCore.howToGetValues = formInstance => {
   return formInstance.props.zentForm.getFormValues();
 };
+zanFormCore.howToSetValues = (formInstance, data) => {
+  formInstance.props.zentForm.setFieldsValue(data);
+}
 
 export default zanFormCore;
