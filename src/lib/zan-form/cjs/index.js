@@ -240,10 +240,6 @@ zanFormCore.howToSetFormValues = function (formInstance, data) {
   formInstance.props.zentForm.setFieldsValue(data);
 };
 
-zanFormCore.howToRemoveFormItem = function () {
-  return null;
-};
-
 zanFormCore.mapDecoratorStateToProps = {
   get: function get(props) {
     return props.data;
