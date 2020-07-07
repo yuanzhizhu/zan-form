@@ -21,11 +21,14 @@ const addValidator = props => {
 };
 
 zanFormCore.onProps = addValidator;
-zanFormCore.howToGetValues = formInstance => {
+zanFormCore.howToGetFormValues = formInstance => {
   return formInstance.props.zentForm.getFormValues();
 };
-zanFormCore.howToSetValues = (formInstance, data) => {
+zanFormCore.howToSetFormValues = (formInstance, data) => {
   formInstance.props.zentForm.setFieldsValue(data);
+};
+zanFormCore.howToRemoveFormItem = () => {
+  return null;
 };
 zanFormCore.mapDecoratorStateToProps = {
   get: props => props.data,

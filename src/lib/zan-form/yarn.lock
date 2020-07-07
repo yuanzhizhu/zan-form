@@ -1144,7 +1144,7 @@ unicode-property-aliases-ecmascript@^1.0.4:
   resolved "http://r.cnpmjs.org/unicode-property-aliases-ecmascript/download/unicode-property-aliases-ecmascript-1.1.0.tgz#dd57a99f6207bedff4628abefb94c50db941c8f4"
   integrity sha1-3Vepn2IHvt/0Yoq++5TFDblByPQ=
 
-zan-form-core@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/zan-form-core/-/zan-form-core-1.0.6.tgz#035e2e834112586c8306c34e93e077b8f30f92bd"
-  integrity sha512-+db+v0zzbwcUBOpcPEqnJytsKFedUL9b8e+c5DtQnmjPNGzfFKz5sCNLa3obEXMhu9gDXZkWoswIN5q0Mwcl9A==
+zan-form-core@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/zan-form-core/-/zan-form-core-1.0.7.tgz#acc60f29eeff3c468dcd26699745f63204ee1fbe"
+  integrity sha512-FuHk7isRcNRLg9fjslJDgZQUcJBh+pHkRG0preMwodxVlWcs8GGINYa0HKC3z2sZbzlO4t5/oTAwl3YC8H+IPg==
